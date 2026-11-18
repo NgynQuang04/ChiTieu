@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#4f46e5">
+<meta name="apple-mobile-web-app-title" content="Chi tiêu">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<title>Chi tiêu</title>
+<style>
+:root{--bg:#f2f4f8;--card:#fff;--tx:#14181f;--mu:#6b7380;--bd:#e6e9ef;--ac:#4f46e5;--ac2:#7c3aed;--in:#059669;--ex:#e11d48;--sv:#0891b2;--sh:0 1px 3px rgba(20,24,31,.06),0 6px 16px rgba(20,24,31,.05);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1116;--card:#181d25;--tx:#e9ecf1;--mu:#8f98a6;--bd:#272e39;--ac:#818cf8;--ac2:#a78bfa;--in:#34d399;--ex:#fb7185;--sv:#22d3ee;--sh:none}}
+:root[data-theme="dark"]{--bg:#0e1116;--card:#181d25;--tx:#e9ecf1;--mu:#8f98a6;--bd:#272e39;--ac:#818cf8;--ac2:#a78bfa;--in:#34d399;--ex:#fb7185;--sv:#22d3ee;--sh:none}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:480px;margin:0 auto;padding:12px 12px 150px}
+.pg{display:none}.pg.on{display:block}
+.hero{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-radius:22px;padding:16px;margin-bottom:12px;box-shadow:var(--sh)}
+.mn{display:flex;align-items:center;justify-content:space-between}
+.mn button{background:rgba(255,255,255,.2);border:0;color:#fff;width:34px;height:34px;border-radius:50%;font-size:18px;padding:0}
+.big{font-size:30px;font-weight:700;margin:4px 0;text-align:center}
+.lb{text-align:center;opacity:.85;font-size:13px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.g3 div{background:rgba(255,255,255,.16);border-radius:12px;padding:8px;text-align:center}
+.g3 small{display:block;opacity:.85;font-size:11px}.g3 b{font-size:13px}
+.card{background:var(--card);border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:var(--sh);border:1px solid var(--bd)}
+h3{margin:0 0 10px;font-size:15px}
+button{font:inherit;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;padding:7px 12px}
+button.p{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600;width:100%;padding:12px}
+input,select,textarea{width:100%;font:inherit;padding:10px;margin-bottom:8px;border:1px solid var(--bd);border-radius:12px;background:var(--bg);color:var(--tx)}
+.bar{height:8px;background:var(--bd);border-radius:6px;overflow:hidden;margin-top:5px}
+.bar i{display:block;height:100%;background:var(--ac);border-radius:6px}
+.hero .bar{background:rgba(255,255,255,.25)}.hero .bar i{background:#fff}
+.bar i.o{background:var(--ex)}.bar i.sv{background:var(--sv)}
+.mu{color:var(--mu);font-size:13px}
+.in{color:var(--in)}.ex{color:var(--ex)}.sv{color:var(--sv)}
+.r{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--bd)}.r:first-child{border-top:0}
+.av{width:36px;height:36px;border-radius:12px;background:var(--bd);display:grid;place-items:center;font-weight:700;flex:none}
+.fl{flex:1;min-width:0}.fl small{display:block;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x{border:0;background:none;color:var(--mu);padding:4px 8px}
+.cat{margin-bottom:12px;cursor:pointer}.cat .l{display:flex;justify-content:space-between}
+.chip{margin:0 6px 6px 0;border-radius:20px;padding:5px 12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--bd);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.nav button{border:0;background:none;color:var(--mu);font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;padding:4px}
+.nav button span{font-size:20px}.nav button.on{color:var(--ac);font-weight:600}
+.fab{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;font-size:30px;padding:0;box-shadow:0 6px 18px rgba(79,70,229,.4)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:9}
+.sheet{background:var(--card);width:100%;max-width:480px;border-radius:22px 22px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));max-height:90vh;overflow:auto}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.seg button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.rp{display:flex;align-items:center;gap:8px;margin-bottom:10px}.rp input{width:auto;margin:0}
+</style>
+</head>
+<body>
+<div class="w">
+  <div class="hero">
+    <div class="mn"><button id="pv">‹</button><b id="mt"></b><button id="nx">›</button></div>
+    <div class="lb" style="margin-top:8px">Còn lại trong tháng</div>
+    <div class="big" id="sb"></div>
+    <div class="g3"><div><small>Thu</small><b id="si"></b></div><div><small>Chi</small><b id="se"></b></div><div><small>Tiết kiệm</small><b id="ss"></b></div></div>
+    <div style="margin-top:12px;font-size:13px;display:flex;justify-content:space-between"><span id="bl"></span><b id="bg" style="cursor:pointer;text-decoration:underline">Đặt</b></div>
+    <div class="bar"><i id="bb" style="width:0"></i></div>
+  </div>
+
+  <div class="pg on">
+    <div class="card"><h3>Thu chi 6 tháng gần nhất</h3><div id="ch"></div></div>
+    <div class="card"><h3>Chi theo danh mục</h3><div class="mu" style="margin:-6px 0 10px">Chạm vào danh mục để đặt ngân sách riêng.</div><div id="cs"></div></div>
+  </div>
+
+  <div class="pg">
+    <div class="card">
+      <input id="q" placeholder="Tìm theo ghi chú hoặc danh mục">
+      <select id="cf"></select>
+      <div id="ls"></div>
+    </div>
+  </div>
+
+  <div class="pg">
+    <div class="card"><h3>Mục tiêu tiết kiệm</h3><div id="gl"></div><button id="ga">+ Thêm mục tiêu</button></div>
+    <div class="card"><h3>Nợ và cho vay</h3><div id="ds"></div><div class="two" style="margin-top:8px"><button id="do">+ Cho vay</button><button id="db">+ Đang nợ</button></div></div>
+  </div>
+
+  <div class="pg">
+    <div class="card"><h3>Danh mục chi</h3><div id="ce"></div><button id="ae">+ Thêm</button></div>
+    <div class="card"><h3>Danh mục thu</h3><div id="ci"></div><button id="ai">+ Thêm</button></div>
+    <div class="card"><h3>Khoản định kỳ</h3><div id="rc"></div></div>
+    <div class="card">
+      <h3>Sao lưu dữ liệu</h3>
+      <p class="mu" style="margin-top:0">Dữ liệu lưu trong trình duyệt của máy này. Hãy xuất file định kỳ để không bị mất khi xóa lịch sử.</p>
+      <div class="two"><button id="ex">Xuất dữ liệu</button><button id="im">Nhập dữ liệu</button></div>
+      <input type="file" id="fl" accept=".json,application/json" style="display:none">
+    </div>
+  </div>
+</div>
+
+<button class="fab" id="fab">+</button>
+<div class="nav">
+  <button class="on"><span>📊</span>Tổng quan</button>
+  <button><span>🧾</span>Giao dịch</button>
+  <button><span>🎯</span>Tiết kiệm</button>
+  <button><span>⚙️</span>Cài đặt</button>
+</div>
+
+<div class="ov" id="dg" style="z-index:20"><div class="sheet"><h3 id="dgt"></h3><p class="mu" id="dgm" style="margin-top:0"></p><div id="dgf"></div><div class="two"><button id="dgc">Hủy</button><button class="p" id="dgo">OK</button></div></div></div>
+<div class="ov" id="ov"><div class="sheet">
+  <div class="seg"><button id="te" class="on">Khoản chi</button><button id="ti">Khoản thu</button></div>
+  <input id="am" inputmode="numeric" placeholder="Số tiền (VNĐ)">
+  <select id="ct"></select>
+  <input id="nt" placeholder="Ghi chú (không bắt buộc)">
+  <input id="dt" type="date">
+  <label class="rp"><input type="checkbox" id="rp"> Lặp lại hằng tháng</label>
+  <div class="two"><button id="cl">Hủy</button><button class="p" id="ad">Thêm</button></div>
+</div></div>
+
+<script>
+var DE=["Ăn uống","Đi lại","Nhà ở","Mua sắm","Học tập","Giải trí","Sức khỏe","Khác"],DI=["Lương","Thưởng","Được cho","Khác"];
+var KEY="chitieu_v1";
+function norm(p){return{tx:p.tx,budget:p.budget||0,goals:p.goals||[],cats:p.cats&&p.cats.e&&p.cats.i?p.cats:{e:DE.slice(),i:DI.slice()},cb:p.cb||{},rec:p.rec||[],debts:p.debts||[]}}
+var S=norm({tx:[]});
+try{var r0=localStorage.getItem(KEY);if(r0){var p0=JSON.parse(r0);if(p0&&Array.isArray(p0.tx))S=norm(p0)}}catch(e){}
+var $=i=>document.getElementById(i);
+var fm=n=>Math.round(n).toLocaleString("vi-VN")+"đ";
+var esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+var num=v=>parseInt(String(v||"").replace(/\D/g,""),10)||0;
+var today=()=>{var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+var cur=today().slice(0,7),ty="e",_u=0;
+var uid=()=>Date.now()*100+(_u++%100);
+var save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+function dlg(t,f,cb,m){$("dgt").textContent=t;$("dgm").textContent=m||"";
+  $("dgf").innerHTML=f.map((x,i)=>`<div class="mu">${esc(x.l)}</div>`+(x.t?`<textarea id="dgf${i}" style="height:130px">${esc(x.v||"")}</textarea>`:`<input id="dgf${i}" value="${esc(x.v||"")}"${x.n?' inputmode="numeric"':""}>`)).join("");
+  $("dg").style.display="flex";if(f.length)setTimeout(()=>{$("dgf0").focus();if(f[0].t)$("dgf0").select()},50);
+  $("dgc").onclick=()=>$("dg").style.display="none";
+  $("dgo").onclick=()=>{var v=f.map((x,i)=>x.n?num($("dgf"+i).value):$("dgf"+i).value.trim());$("dg").style.display="none";cb(v)}}
+function nxt(m){var y=+m.slice(0,4),n=+m.slice(5)+1;if(n>12){n=1;y++}return y+"-"+String(n).padStart(2,"0")}
+function gen(){var t=today(),nm=t.slice(0,7),ch=0;
+  S.rec.forEach(r=>{var m=r.last;
+    while(true){m=nxt(m);if(m>nm)break;var d=m+"-"+String(Math.min(r.day,28)).padStart(2,"0");if(d>t)break;
+      S.tx.push({id:uid(),type:r.type,amount:r.amount,cat:r.cat,note:r.note,date:d,auto:1});r.last=m;ch=1}});
+  if(ch)save()}
+function gsaved(id){return S.tx.reduce((a,t)=>a+(t.type=="s"&&t.gid==id?t.amount:0),0)}
+
+function render(){
+  var y=cur.split("-");$("mt").textContent="Tháng "+(+y[1])+"/"+y[0];
+  var M=S.tx.filter(t=>t.date.slice(0,7)==cur),i=0,e=0,sv=0,by={};
+  M.forEach(t=>{if(t.type=="i")i+=t.amount;else if(t.type=="s")sv+=t.amount;else{e+=t.amount;by[t.cat]=(by[t.cat]||0)+t.amount}});
+  $("sb").textContent=fm(i-e-sv);$("si").textContent=fm(i);$("se").textContent=fm(e);$("ss").textContent=fm(sv);
+  if(S.budget>0){var pc=e/S.budget*100;$("bl").textContent="Ngân sách "+fm(S.budget)+" · đã dùng "+Math.round(pc)+"%";$("bb").style.width=Math.min(100,pc)+"%";$("bb").className=e>S.budget?"o":""}
+  else{$("bl").textContent="Chưa đặt ngân sách tháng";$("bb").style.width="0"}
+
+  var ks=S.cats.e.slice();Object.keys(by).forEach(k=>{if(ks.indexOf(k)<0)ks.push(k)});
+  ks.sort((a,b)=>(by[b]||0)-(by[a]||0));
+  $("cs").innerHTML=ks.map(k=>{var v=by[k]||0,b=S.cb[k]||0,p=b?v/b*100:(e?v/e*100:0),o=b&&v>b;
+    return`<div class="cat" data-c="${esc(k)}"><div class="l"><b>${esc(k)}</b><span class="${o?"ex":"mu"}">${fm(v)}${b?" / "+fm(b):""}</span></div><div class="bar"><i class="${o?"o":""}" style="width:${Math.min(100,p)}%"></i></div></div>`}).join("");
+
+  var m6=[],k,d;
+  for(k=5;k>=0;k--){d=new Date(+y[0],+y[1]-1-k,1);m6.push(d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"))}
+  var dt=m6.map(q=>{var a=0,b=0;S.tx.forEach(t=>{if(t.date.slice(0,7)==q){if(t.type=="i")a+=t.amount;else if(t.type=="e")b+=t.amount}});return{q:q,i:a,e:b}});
+  var mx=Math.max(1,...dt.map(o=>Math.max(o.i,o.e)));
+  $("ch").innerHTML=`<div style="display:flex;gap:6px">`+dt.map(o=>`<div style="flex:1;text-align:center"><div style="display:flex;gap:2px;align-items:flex-end;height:100px;justify-content:center"><i style="width:40%;border-radius:4px 4px 0 0;background:var(--in);height:${o.i/mx*100}%"></i><i style="width:40%;border-radius:4px 4px 0 0;background:var(--ex);height:${o.e/mx*100}%"></i></div><small class="mu">T${+o.q.slice(5)}</small></div>`).join("")+`</div><div class="mu" style="margin-top:6px">Xanh: thu · Đỏ: chi</div>`;
+
+  var cf0=$("cf").value,all=[...new Set(S.cats.e.concat(S.cats.i,M.map(t=>t.cat)))];
+  $("cf").innerHTML=`<option value="">Tất cả danh mục</option>`+all.map(c=>`<option>${esc(c)}</option>`).join("");$("cf").value=cf0;
+  var q=$("q").value.trim().toLowerCase(),cf=$("cf").value;
+  var L=M.filter(t=>(!cf||t.cat==cf)&&(!q||(t.cat+" "+t.note).toLowerCase().includes(q))).sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:b.id-a.id);
+  $("ls").innerHTML=L.length?L.map(t=>{var x=t.date.split("-");return`<div class="r"><div class="av">${esc(t.cat.charAt(0))}</div><div class="fl"><b>${esc(t.cat)}</b><small>${x[2]}/${x[1]}${t.auto?" · định kỳ":""}${t.note?" · "+esc(t.note):""}</small></div><b class="${t.type=="i"?"in":t.type=="s"?"sv":"ex"}">${t.type=="i"?"+":t.type=="s"?"→":"-"}${fm(t.amount)}</b><button class="x" data-d="${t.id}">✕</button></div>`}).join(""):`<span class="mu">Không có giao dịch.</span>`;
+
+  $("gl").innerHTML=S.goals.length?S.goals.map(g=>{var s=gsaved(g.id),p=Math.min(100,g.target?s/g.target*100:0);
+    return`<div class="cat" style="cursor:default"><div class="l"><b>${esc(g.name)}</b><span class="mu">${fm(s)} / ${fm(g.target)} (${Math.round(p)}%)</span></div><div class="bar"><i class="sv" style="width:${p}%"></i></div><div style="margin-top:6px"><button data-g="${g.id}">+ Gửi thêm</button> <button class="x" data-x="${g.id}">Xóa</button></div></div>`}).join(""):`<p class="mu">Chưa có mục tiêu nào.</p>`;
+
+  var o=0,b=0;S.debts.forEach(x=>{if(!x.paid){if(x.dir=="o")o+=x.amount;else b+=x.amount}});
+  $("ds").innerHTML=`<div class="two" style="margin-bottom:8px"><div><span class="mu">Người khác nợ bạn</span><br><b class="in">${fm(o)}</b></div><div><span class="mu">Bạn đang nợ</span><br><b class="ex">${fm(b)}</b></div></div>`+(S.debts.length?S.debts.map(x=>`<div class="r"><div class="fl"><b style="${x.paid?"text-decoration:line-through;opacity:.5":""}">${esc(x.who)}</b><small>${x.dir=="o"?"nợ bạn":"bạn nợ"}${x.note?" · "+esc(x.note):""}</small></div><b class="${x.dir=="o"?"in":"ex"}">${fm(x.amount)}</b><button class="x" data-p="${x.id}">${x.paid?"↺":"✓"}</button><button class="x" data-r="${x.id}">✕</button></div>`).join(""):`<p class="mu">Chưa có khoản nào.</p>`);
+
+  var chips=(k)=>S.cats[k].map(c=>`<button class="chip" data-k="${k}" data-n="${esc(c)}">${esc(c)}</button>`).join("");
+  $("ce").innerHTML=chips("e");$("ci").innerHTML=chips("i");
+  $("rc").innerHTML=S.rec.length?S.rec.map(x=>`<div class="r"><div class="fl"><b>${esc(x.cat)}</b><small>Ngày ${x.day} hằng tháng${x.note?" · "+esc(x.note):""}</small></div><b class="${x.type=="i"?"in":"ex"}">${x.type=="i"?"+":"-"}${fm(x.amount)}</b><button class="x" data-q="${x.id}">✕</button></div>`).join(""):`<p class="mu">Chưa có khoản định kỳ. Khi thêm giao dịch, bật “Lặp lại hằng tháng”.</p>`;
+}
+
+function shift(n){var y=cur.split("-"),d=new Date(+y[0],+y[1]-1+n,1);cur=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");render()}
+$("pv").onclick=()=>shift(-1);$("nx").onclick=()=>shift(1);
+function go(n){document.querySelectorAll(".pg").forEach((p,i)=>p.classList.toggle("on",i==n));document.querySelectorAll(".nav button").forEach((b,i)=>b.classList.toggle("on",i==n))}
+document.querySelectorAll(".nav button").forEach((b,i)=>b.onclick=()=>{go(i);scrollTo(0,0)});
+$("q").oninput=render;$("cf").onchange=render;
+
+function cats(){$("ct").innerHTML=S.cats[ty].map(c=>`<option>${esc(c)}</option>`).join("")}
+$("fab").onclick=()=>{$("dt").value=today();$("am").value="";$("nt").value="";$("rp").checked=false;cats();$("ov").style.display="flex";setTimeout(()=>$("am").focus(),50)};
+$("cl").onclick=()=>$("ov").style.display="none";
+$("ov").onclick=ev=>{if(ev.target==$("ov"))$("ov").style.display="none"};
+$("te").onclick=()=>{ty="e";$("te").className="on";$("ti").className="";cats()};
+$("ti").onclick=()=>{ty="i";$("ti").className="on";$("te").className="";cats()};
+$("ad").onclick=()=>{var a=num($("am").value);if(!a){$("am").focus();return}
+  var d=$("dt").value||today(),c=$("ct").value,n=$("nt").value.trim();
+  S.tx.push({id:uid(),type:ty,amount:a,cat:c,note:n,date:d});
+  if($("rp").checked)S.rec.push({id:uid(),type:ty,amount:a,cat:c,note:n,day:+d.slice(8),last:d.slice(0,7)});
+  save();cur=d.slice(0,7);$("ov").style.display="none";render()};
+
+$("ls").onclick=ev=>{var id=ev.target.dataset.d;if(id)dlg("Xóa giao dịch này?",[],()=>{S.tx=S.tx.filter(t=>String(t.id)!==id);save();render()})};
+$("bg").onclick=()=>dlg("Ngân sách mỗi tháng",[{l:"Số tiền (VNĐ)",n:1,v:S.budget||""}],v=>{S.budget=v[0];save();render()});
+$("cs").onclick=ev=>{var c=ev.target.closest("[data-c]");if(!c)return;var k=c.dataset.c;dlg("Ngân sách: "+k,[{l:"Số tiền mỗi tháng (VNĐ), để 0 để bỏ",n:1,v:S.cb[k]||""}],v=>{if(v[0])S.cb[k]=v[0];else delete S.cb[k];save();render()})};
+
+$("ga").onclick=()=>dlg("Mục tiêu mới",[{l:"Tên mục tiêu (ví dụ: Mua laptop)"},{l:"Số tiền cần đạt (VNĐ)",n:1}],v=>{if(!v[0]||!v[1])return;S.goals.push({id:uid(),name:v[0],target:v[1]});save();render()});
+$("gl").onclick=ev=>{var g=ev.target.dataset.g,x=ev.target.dataset.x;
+  if(g){var goal=S.goals.filter(o=>String(o.id)===g)[0];dlg("Gửi vào "+goal.name,[{l:"Số tiền (VNĐ)",n:1}],w=>{var v=w[0];
+    if(v){S.tx.push({id:uid(),type:"s",amount:v,cat:"Tiết kiệm · "+goal.name,note:"",date:today(),gid:goal.id});save();cur=today().slice(0,7);render()}})}
+  if(x)dlg("Xóa mục tiêu này?",[],()=>{S.goals=S.goals.filter(o=>String(o.id)!==x);save();render()},"Các khoản đã gửi vẫn nằm trong lịch sử.")};
+
+function addDebt(dir){dlg(dir=="o"?"Cho vay":"Đang nợ",[{l:dir=="o"?"Cho ai vay?":"Nợ ai?"},{l:"Số tiền (VNĐ)",n:1},{l:"Ghi chú (không bắt buộc)"}],v=>{var w=v[0],a=v[1];if(!w||!a)return;
+  S.debts.push({id:uid(),dir:dir,who:w,amount:a,note:v[2],paid:false,date:today()});save();render()})}
+$("do").onclick=()=>addDebt("o");$("db").onclick=()=>addDebt("b");
+$("ds").onclick=ev=>{var p=ev.target.dataset.p,r=ev.target.dataset.r;
+  if(p){S.debts.forEach(x=>{if(String(x.id)===p)x.paid=!x.paid});save();render()}
+  if(r)dlg("Xóa khoản này?",[],()=>{S.debts=S.debts.filter(x=>String(x.id)!==r);save();render()})};
+
+function chipClick(ev){var b=ev.target.closest("[data-n]");if(!b)return;var k=b.dataset.k,o=b.dataset.n,L=S.cats[k];
+  dlg("Sửa danh mục",[{l:"Tên danh mục (để trống để xóa)",v:o}],w=>{var n=w[0];
+  if(!n){if(L.length>1){S.cats[k]=L.filter(c=>c!=o);save();render()}return}
+  if(n==o||L.indexOf(n)>=0)return;
+  L[L.indexOf(o)]=n;S.tx.forEach(t=>{if(t.cat==o&&t.type==k)t.cat=n});S.rec.forEach(x=>{if(x.cat==o&&x.type==k)x.cat=n});
+  if(S.cb[o]){S.cb[n]=S.cb[o];delete S.cb[o]}save();render()})}
+$("ce").onclick=$("ci").onclick=chipClick;
+function addCat(k){dlg("Danh mục mới",[{l:"Tên danh mục"}],v=>{var n=v[0];if(n&&S.cats[k].indexOf(n)<0){S.cats[k].push(n);save();render()}})}
+$("ae").onclick=()=>addCat("e");$("ai").onclick=()=>addCat("i");
+$("rc").onclick=ev=>{var q=ev.target.dataset.q;if(q)dlg("Dừng khoản định kỳ này?",[],()=>{S.rec=S.rec.filter(x=>String(x.id)!==q);save();render()},"Các giao dịch đã tạo vẫn giữ nguyên.")};
+
+$("ex").onclick=()=>dlg("Sao lưu dữ liệu",[{l:"Dữ liệu",t:1,v:JSON.stringify(S)}],()=>{},"Nhấn giữ vào ô bên dưới, chọn Sao chép rồi dán vào Ghi chú hoặc tin nhắn của bạn để lưu lại.");
+$("im").onclick=()=>dlg("Nhập dữ liệu",[{l:"Dán nội dung sao lưu vào đây",t:1}],v=>{try{var p=JSON.parse(v[0]);if(!p||!Array.isArray(p.tx))throw 0;S=norm(p);save();gen();render()}catch(e){dlg("Dữ liệu không hợp lệ.",[],()=>{})}});
+$("fl").onchange=function(){var f=this.files[0];if(!f)return;var rd=new FileReader();
+  rd.onload=()=>{try{var p=JSON.parse(rd.result);if(!p||!Array.isArray(p.tx))throw 0;if(confirm("Thay toàn bộ dữ liệu hiện tại bằng file này?")){S=norm(p);save();gen();render()}}catch(e){alert("File không hợp lệ.")}};
+  rd.readAsText(f);this.value=""};
+
+gen();render();
+if("serviceWorker" in navigator&&location.protocol.indexOf("http")==0){navigator.serviceWorker.register("sw.js").catch(function(){})}
+</script>
+</body>
+</html>
